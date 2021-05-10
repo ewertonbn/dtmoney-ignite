@@ -51,7 +51,10 @@ export function TransactionProvider({ children }: TransactionsProviderProps) {
         transaction,
       ]);
   
-      toast.success("Transação adicionada!");
+      setTimeout(function() {
+        toast.success("Transação adicionada!");
+      }, 2000)
+      
     } catch {
       toast.error("Erro ao adicionar transação!");
     }

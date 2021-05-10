@@ -5,7 +5,8 @@ import { useTransactions } from '../../hooks/useTransactions';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import closeImg from '../../assets/close.svg'; 
-import { FiCheckSquare } from 'react-icons/fi'
+import { FiCheckSquare, FiLoader } from 'react-icons/fi'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 import { Container, RadioBox, TransactionTypeContainer } from './styles';
 import { toast } from 'react-toastify';
@@ -22,9 +23,12 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
   const [type, setType] = useState('deposit');
+  const [loading, setLoading] = useState(false);
 
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
+
+    setLoading(true);
 
     if(title !== '' && category !== '') {
       await createTransaction({
@@ -38,9 +42,14 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
       setAmount(0);
       setCategory('');
       setType('deposit');
-      onRequestClose();
+      
+      setTimeout(function() {
+        setLoading(false);
+        onRequestClose();
+      }, 2000)
       
     } else {
+      setLoading(false);
       toast.error("Preencha todos os campos!");
     }    
   }
@@ -106,7 +115,7 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
 
         <button type="submit">
           Cadastrar
-          <FiCheckSquare size={16} />
+          {loading ? <AiOutlineLoading3Quarters size={16} /> : <FiCheckSquare size={16} />}
         </button>
       </Container>
     </Modal>
