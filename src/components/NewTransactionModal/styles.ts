@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { darken, transparentize } from 'polished';
 
@@ -27,32 +27,6 @@ export const Container = styled.form`
 
     & + input {
       margin-top: 1rem;
-    }
-  }
-
-  button[type="submit"] {
-    width: 100%;
-    padding: 0 1.5rem;
-    height: 4rem;
-    background: var(--green);
-    color: #FFF;
-    border-radius: 0.25rem;
-    border: 0;
-    font-size: 1rem;
-    margin-top: 1.5rem;
-    font-weight: 600;
-    transition: filter 0.2s;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      filter: brightness(0.9);
-    }
-
-    svg {
-      margin-left: 0.5rem;
     }
   }
 `;
@@ -105,4 +79,40 @@ export const RadioBox = styled.button<RadioBoxProps>`
     font-size: 1rem;
     color: var(--text-title);
   }
+`;
+
+interface ButtonSubmitProps {
+  isLoading: boolean;
+}
+
+export const ButtonSubmit = styled.button<ButtonSubmitProps>`
+  width: 100%;
+  padding: 0 1.5rem;
+  height: 4rem;
+  background: var(--green);
+  color: #FFF;
+  border-radius: 0.25rem;
+  border: 0;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  font-weight: 600;
+  transition: filter 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  svg {
+    margin-left: 0.5rem;
+    animation: ${(props) => props.isLoading && spin } 2s linear infinite;
+  }
+`
+
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 `;

@@ -5,11 +5,12 @@ import { useTransactions } from '../../hooks/useTransactions';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import closeImg from '../../assets/close.svg'; 
-import { FiCheckSquare, FiLoader } from 'react-icons/fi'
+import { FiCheckSquare } from 'react-icons/fi'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
-import { Container, RadioBox, TransactionTypeContainer } from './styles';
 import { toast } from 'react-toastify';
+
+import { ButtonSubmit, Container, RadioBox, TransactionTypeContainer } from './styles';
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -38,15 +39,14 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
         type,
       })
 
-      setTitle('');
-      setAmount(0);
-      setCategory('');
-      setType('deposit');
-      
       setTimeout(function() {
+        setTitle('');
+        setAmount(0);
+        setCategory('');  
+        setType('deposit');
         setLoading(false);
         onRequestClose();
-      }, 2000)
+      }, 1500)
       
     } else {
       setLoading(false);
@@ -113,10 +113,13 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
           onChange={event => setCategory(event.target.value)}
         />
 
-        <button type="submit">
+        <ButtonSubmit
+          type="submit"
+          isLoading={loading}
+        >
           Cadastrar
           {loading ? <AiOutlineLoading3Quarters size={16} /> : <FiCheckSquare size={16} />}
-        </button>
+        </ButtonSubmit>
       </Container>
     </Modal>
   );
