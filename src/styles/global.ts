@@ -4,6 +4,7 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --red: #E52E4D;
     --blue: #5429CC;
+    --blue-dark: #6b43d9;
     --green: #33CC95;
     --blue-light: #6933FF;
     --text-title: #363F5F;
@@ -85,5 +86,10 @@ export const GlobalStyle = createGlobalStyle`
     &:hover {
       filter: brightness(0.8);
     }
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: var(--size, 20% auto);
   }
 `
