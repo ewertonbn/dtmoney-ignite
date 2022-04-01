@@ -4,11 +4,9 @@ import { useTransactions } from '../../hooks/useTransactions';
 
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
-import closeImg from '../../assets/close.svg'; 
+import closeImg from '../../assets/close.svg';
 import { FiCheckSquare } from 'react-icons/fi'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
-
-import { toast } from 'react-toastify';
 
 import { ButtonSubmit, Container, RadioBox, TransactionTypeContainer } from './styles';
 
@@ -29,56 +27,46 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
-    setLoading(true);
+    await createTransaction({
+      title,
+      amount,
+      category,
+      type,
+    })
 
-    if(title !== '' && category !== '') {
-      await createTransaction({
-        title,
-        amount,
-        category,
-        type,
-      })
-
-      setTimeout(function() {
-        setTitle('');
-        setAmount(0);
-        setCategory('');  
-        setType('deposit');
-        setLoading(false);
-        onRequestClose();
-      }, 1500)
-      
-    } else {
-      setLoading(false);
-      toast.error("Preencha todos os campos!");
-    }    
+    setTitle('');
+    setAmount(0);
+    setCategory('');
+    setType('deposit');
+    setLoading(false);
+    onRequestClose();
   }
 
-  return(
+  return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
-    > 
-      <button 
-        type="button" 
+    >
+      <button
+        type="button"
         onClick={onRequestClose}
         className="react-modal-close"
       >
-        <img src={closeImg} alt="Fechar modal"/>
+        <img src={closeImg} alt="Fechar modal" />
       </button>
 
       <Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastrar transação</h2>
 
-        <input 
+        <input
           placeholder="Título"
           value={title}
           onChange={event => setTitle(event.target.value)}
         />
 
-        <input 
+        <input
           type="number"
           placeholder="Valor"
           value={amount}
@@ -92,7 +80,7 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
             isActive={type === 'deposit'}
             activeColor="green"
           >
-            <img src={incomeImg} alt="Entrada"/>
+            <img src={incomeImg} alt="Entrada" />
             <span>Entrada</span>
           </RadioBox>
 
@@ -102,12 +90,12 @@ export function NewTansactionModal({ isOpen, onRequestClose }: NewTransactionMod
             isActive={type === 'withdraw'}
             activeColor="red"
           >
-            <img src={outcomeImg} alt="Saída"/>
+            <img src={outcomeImg} alt="Saída" />
             <span>Saída</span>
           </RadioBox>
         </TransactionTypeContainer>
 
-        <input 
+        <input
           placeholder="Categoria"
           value={category}
           onChange={event => setCategory(event.target.value)}

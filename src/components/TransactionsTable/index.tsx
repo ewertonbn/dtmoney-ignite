@@ -1,13 +1,13 @@
 import { useTransactions } from "../../hooks/useTransactions";
 
-import { FiTrash, FiAlertTriangle} from 'react-icons/fi';
+import { FiTrash, FiAlertTriangle } from 'react-icons/fi';
 
 import { Container } from "./styles";
 
 export function TransactionsTable() {
   const { transactions, removeTransaction } = useTransactions();
 
-  return(
+  return (
     <Container>
       {transactions.length > 0 ?
         <table>
@@ -35,10 +35,10 @@ export function TransactionsTable() {
                 <td>
                   {new Intl.DateTimeFormat('pt-BR').format(
                     new Date(transaction.createdAt)
-                  )}  
+                  )}
                 </td>
                 <td>
-                  <button 
+                  <button
                     type="button"
                     onClick={() => removeTransaction(transaction.id)}
                   >
@@ -49,7 +49,7 @@ export function TransactionsTable() {
             ))}
           </tbody>
         </table>
-      : <p>
+        : <p>
           <FiAlertTriangle size={20} color={'#d61717'} />
           Nenhuma transação cadastrada
         </p>}

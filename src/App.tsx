@@ -3,12 +3,10 @@ import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import Modal from 'react-modal';
 import { NewTansactionModal } from "./components/NewTransactionModal";
-
-import { ToastContainer } from 'react-toastify';
-
+import { TransactionProvider } from "./hooks/useTransactions";
 
 import { GlobalStyle } from "./styles/global";
-import { TransactionProvider } from "./hooks/useTransactions";
+import { Toaster } from 'react-hot-toast';
 
 Modal.setAppElement('#root');
 
@@ -27,13 +25,13 @@ export function App() {
     <TransactionProvider>
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
       <Dashboard />
-      <NewTansactionModal 
+      <NewTansactionModal
         isOpen={isNewTransactionModal}
         onRequestClose={handleCloseNewTransactionModal}
       />
-      
+
       <GlobalStyle />
-      <ToastContainer autoClose={3000} />
+      <Toaster />
     </TransactionProvider>
   );
 }

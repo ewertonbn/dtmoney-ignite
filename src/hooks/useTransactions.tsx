@@ -1,10 +1,7 @@
 import { createContext, useEffect, useState, ReactNode, useContext } from 'react';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 import { api } from '../services/api';
-
-import 'react-toastify/dist/ReactToastify.css';
-
 interface Transaction {
   id: number;
   title: string;
@@ -45,18 +42,20 @@ export function TransactionProvider({ children }: TransactionsProviderProps) {
         createdAt: new Date(),
       })
       const { transaction } = response.data;
-  
+
       setTransactions([
         ...transactions,
         transaction,
       ]);
-  
-      setTimeout(function() {
-        toast.success("Transação adicionada!");
-      }, 2000)
-      
+
+      toast.success("Transação adicionada!", {
+        duration: 4000
+      });
+
     } catch {
-      toast.error("Erro ao adicionar transação!");
+      toast.error("Erro ao adicionar transação!", {
+        duration: 4000
+      });
     }
   }
 
@@ -66,13 +65,17 @@ export function TransactionProvider({ children }: TransactionsProviderProps) {
       const transactionFiltered = transactions.filter(transaction => id !== transaction.id)
       setTransactions(transactionFiltered)
 
-      toast.success("Transação removida!");
+      toast.success("Transação removida!", {
+        duration: 4000
+      });
     } catch {
-      toast.error("Erro ao adicionar transação!");
+      toast.error("Erro ao adicionar transação!", {
+        duration: 4000
+      });
     }
   }
 
-  return(
+  return (
     <TransactionContext.Provider value={{ transactions, createTransaction, removeTransaction }}>
       {children}
     </TransactionContext.Provider>
